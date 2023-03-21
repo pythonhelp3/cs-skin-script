@@ -12,17 +12,23 @@ import time
 
 # Set up the webdriver (assuming you have already installed it)
 options = Options()
-options.add_argument('--profile-directory=Profile 1')
-options.add_argument(r"--user-data-dir=C:\\Users\\camde\\AppData\\Local\\Google\\Chrome\\User Data\\")
+options.add_argument('--profile-directory=user')
+options.add_argument(r"--user-data-dir=app-data")
 driver = uc.Chrome(options=options)
 
 # Navigate to the skinport.com/cart page
 driver.get("https://skinport.com/market?sort=date&order=desc")
 
+
+# changing this soon to only run for a certain amount of time, so that it will not get caught
+# within an infinte loop when there are no items to buy, trade, or sell.
 while True:
     try:
+        # get current url
         if driver.current_url == 'https://skinport.com/market?sort=date&order=desc':
 
+
+            # scapes the page for the discouted elements 
             discount_elements = driver.find_elements(By.CSS_SELECTOR, ".GradientLabel.ItemPreview-discount span")
             actions = ActionChains(driver)
 
