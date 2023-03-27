@@ -20,8 +20,7 @@ driver = uc.Chrome(options=options)
 driver.get("https://skinport.com/market?sort=date&order=desc")
 
 
-# changing this soon to only run for a certain amount of time, so that it will not get caught
-# within an infinte loop when there are no items to buy, trade, or sell.
+# Find and select the "Add to cart" button after a qualifying item is found
 while True:
     try:
         # get current url
@@ -114,6 +113,8 @@ while True:
         print("Checkboxes not found. Refreshing the page and retrying in 5 seconds...")
         time.sleep(1)
 
+
+# Make purchases
 while True:
     # Wait for the user to leave the skinport.com/cart page
     while "cart" in driver.current_url:

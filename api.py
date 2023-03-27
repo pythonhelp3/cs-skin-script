@@ -26,3 +26,5 @@ api = API(api_key=api_key, api_secret=api_secret)
 
 
 
+# This is slowing being worked on .. I will only allows for easier price managementabs
+# The objectibve is to simplify the process of adding and removing items from the cart
