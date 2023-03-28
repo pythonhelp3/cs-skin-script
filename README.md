@@ -34,3 +34,18 @@ To be continued.
 
 
 
+#### Todos:
+
+- Object Oriented Diagram Analysis
+    - *description*
+    - *class names*
+    - *uses cases*
+
+- Senerio Diagram
+    - *uses case* $\rightarrow$ (client info)
+    - *senerio cases*
+
+- Class Modules
+    - *Api*
+    - *Client*
+    - *BotContainer*
