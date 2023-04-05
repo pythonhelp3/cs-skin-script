@@ -89,6 +89,8 @@ class Bot:
                     EC.element_to_be_clickable((By.CSS_SELECTOR, ".CartButton-viewCart")))
                 actions.move_to_element(view_cart_button).click().perform()
 
+                # Made it to here for Today. Off to a Lab for the evening.
+
         except:
             pass
 
