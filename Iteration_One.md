@@ -114,6 +114,9 @@ while True:
 ```
 
 Second Function: (Provided by Camden)
+I will write a mark up of my understanding shortly
+
+TLDR: this will help check out items, and save them into a cookie.
 
 ```python
 while True:
