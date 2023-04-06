@@ -2,3 +2,5 @@ undetected_chromedriver
 pyautogui
 selenium    
 time
+
+(Camden comment): If it is quicker to not use pyautogui and just detect the elements automatically, you can remove it from the code.
