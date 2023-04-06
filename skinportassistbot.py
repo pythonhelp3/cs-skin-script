@@ -33,9 +33,12 @@ class Bot:
 
     def start(self):
         print("Starting Bot")
+        filtered_item = input("Please enter the items you wish to filter: ")
+        discount = input("Please enter the discount: ")
+        price = input("Please enter the price: ")
+        # cart_items = input()
 
-
-        self.find_item(filtered_items = [], discount = 27, price = 4, cart_items=1)
+        self.find_item(filtered_items = filtered_item, discount = discount, price = price, cart_items=1)
 
 
     # this helper function will drive the bot to make selections based on prices, discounts, items allowed in cart, etc.
@@ -44,6 +47,8 @@ class Bot:
         print("Filtered Items", filtered_items)
         print("Discount", discount)
         print("Price", price)
+
+        print("Press Ctrl-C to quit.")
 
         try:
             if(driver.current_url == 'https://skinport.com/market?sort=data&order=desc'):
@@ -62,42 +67,80 @@ class Bot:
                         price_element = item_element.find_element(By.CSS_SELECTOR, ".ItemPreview-priceValue .Tooltip-link")
                         price_value = float(price_element.text.strip("$"))
 
-                        # Check if the price value if greater than $price
-                        if price_value >= price:
-                            # Hover over the item to reveal the "Add to cart" button
-                            actions.move_to_element(item_element).perform()
+                        # Once item is found sort throught the filter list to identify whether or not the item
+                        #   added to the list
+                        for filtered_item in filtered_items:
+                            if(filtered_item == item_element):
+                                print("Item identified as the filtered item.    Skipping...")
+                                break
+                            else: 
+                                # Check if the price value if greater than $price
+                                if price_value >= price:
+                                    # Hover over the item to reveal the "Add to cart" button
+                                    actions.move_to_element(item_element).perform()
 
-                            # Add a small delay to ensure the "Add to cart" button is displayed
-                            time.sleep(0.5)
+                                    # Add a small delay to ensure the "Add to cart" button is displayed
+                                    time.sleep(0.5)
 
-                            # Find and click the "Add to cart" button
-                            add_to_cart_button = item_element.find_element(By.CSS_SELECTOR, ".ItemPreview-mainAction")
-                            add_to_cart_button.click()
-                            break
+                                    # Find and click the "Add to cart" button
+                                    add_to_cart_button = item_element.find_element(By.CSS_SELECTOR, ".ItemPreview-mainAction")
+                                    add_to_cart_button.click()
+                                    break
 
-                # Wait for the cart element to have a value of :cart_items    
-                cart_count = WebDriverWait(driver, 10).until(
-                    EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), cart_items))
+                        
 
-                # Find the first element and click it
-                cart_button = driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
-                actions = ActionChains(driver)
-                actions.move_to_element(cart_button).click().perform()
-
-                # Wait for the second element to be clickable and click it
-                view_cart_button = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.CSS_SELECTOR, ".CartButton-viewCart")))
-                actions.move_to_element(view_cart_button).click().perform()
-
-                # Made it to here for Today. Off to a Lab for the evening.
-
-        except:
+            # make_purchase()
+        except KeyboardInterrupt():
+            print('\n')
             pass
 
 
     # this helper function will drive the bot to make a purchase   
-    def make_purchase(self):
-        pass
+    def make_purchase(self, ):
+
+        # Wait for the cart element to have a value of :cart_items    
+        cart_count = WebDriverWait(driver, 10).until(
+            EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), cart_items))
+
+        # Find the first element and click it
+        cart_button = driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
+        actions = ActionChains(driver)
+        actions.move_to_element(cart_button).click().perform()
+
+        # Wait for the second element to be clickable and click it
+        view_cart_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".CartButton-viewCart")))
+        actions.move_to_element(view_cart_button).click().perform()
+
+        # Wait for the checkboxes to appear and click them
+        check_box1 = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='tradelock']")))
+        check_box2 = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='cancellation']"))) 
+
+        # Perform the checkbox clicking actions using action chains
+        actions = ActionChains(driver)
+        actions.move_to_element(check_box1).click().perform()
+        actions.move_to_element(check_box2).click().perform()
+
+        # Click the "Proceed to Checkout" button
+        proceed_to_checkout_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
+        proceed_to_checkout_button.click()
+
+        # Click the CSV element
+        pyautogui.moveTo(1262, 348)
+        time.sleep(1)
+        pyautogui.click()
+        time.sleep(0.5)
+        pyautogui.typewrite('145')
+
+        # Click the pay now button
+        pyautogui.moveTo(1226, 419)
+        time.sleep(0.1)
+        pyautogui.click()
+
+
 
 
 
