@@ -10,3 +10,5 @@ api.txt
 config.py
 utils.py
 setup.py
+app.py
+__init__.py
