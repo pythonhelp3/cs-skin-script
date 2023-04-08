@@ -45,8 +45,10 @@ class Bot:
         self.find_item(filtered_items = filtered_item, discount = discount, price = price, cart_items=1)
         self.make_purchase()
 
+    # Setter function for filtering for later
     def add_filter(self, item_list):
-        return self.filtered_items
+        return self.filtered_items.append(item_list)
+    
     # this helper function will drive the bot to make a purchase 
     def make_purchase(self):
         # # Wait for the cart element to have a value of :cart_items    
@@ -131,28 +133,74 @@ class Bot:
                         price_value = float(price_element.text.strip("$"))
 
                         # Once item is found sort throught the filter list to identify whether or not the item
-                        #   added to the list
-                        for filtered_item in filtered_items:
-                            if(filtered_item == item_element):
-                                print("Item identified as the filtered item.    Skipping...")
-                                break
-                            else: 
-                                # Check if the price value if greater than $price
-                                if price_value >= price:
-                                    # Hover over the item to reveal the "Add to cart" button
-                                    actions.move_to_element(item_element).perform()
+                        #   added to the list (Not sure if this works lol)
+                        if 4 < price_value <= 10 and item_element not in filtered_items:
+                            # Hover over the item to reveal the "Add to cart" button
+                            actions.move_to_element(item_element).perform()
 
-                                    # Add a small delay to ensure the "Add to cart" button is displayed
-                                    time.sleep(0.5)
+                            # Add a small delay to ensure the "Add to cart" button is displayed
+                            time.sleep(0.05)
 
-                                    # Find and click the "Add to cart" button
-                                    add_to_cart_button = item_element.find_element(By.CSS_SELECTOR, ".ItemPreview-mainAction")
-                                    add_to_cart_button.click()
-                                    break
+                            # Find and click the "Add to cart" button
+                            add_to_cart_button = item_element.find_element(By.CSS_SELECTOR, ".ItemPreview-mainAction")
+                            add_to_cart_button.click()
 
-                        
+                            # Add the item to the filtered items list
+                            filtered_items.append(item_element)
 
-            self.make_purchase()
+                            # Print the item details
+                            item_name_element = item_element.find_element(By.CSS_SELECTOR, ".ItemPreview-name")
+                            item_name = item_name_element.text
+                            print(f"Added {item_name} to cart")
+
+                        break
+
+                        # Wait for the cart element to have a value of 1
+            cart_count = WebDriverWait(driver, 10).until(
+                EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), "1"))
+
+            # Find the first element and click it
+            cart_button = driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
+            actions = ActionChains(driver)
+            actions.move_to_element(cart_button).click().perform()
+
+            # Wait for the second element to be clickable and click it
+            view_cart_button = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, ".SubmitButton.CartDropdown-checkout")))
+            actions.move_to_element(view_cart_button).click().perform()
+
+            # Wait for the checkboxes to appear and click them
+            check_box1 = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='tradelock']")))
+            check_box2 = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='cancellation']")))
+
+            # Perform the checkbox clicking actions using action chains
+            actions = ActionChains(driver)
+            actions.move_to_element(check_box1).click().perform()
+            actions.move_to_element(check_box2).click().perform()
+
+            # Click the "Proceed to Checkout" button
+            proceed_to_checkout_button = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
+            proceed_to_checkout_button.click()
+
+            # Click the CVC element
+            pyautogui.moveTo(1262, 348)
+            time.sleep(1)
+            pyautogui.click()
+            time.sleep(0.5)
+            pyautogui.typewrite('145')
+
+              #Click the pay now button
+            pyautogui.moveTo(1226, 419)
+            time.sleep(0.1)
+            pyautogui.click()
+
+            # Soon to add a new database for simplifying trades, cancellations, etc.. May revert
+            #    to sessions cookies but will test running times very soon.
+
+             
         except:
             # KeyboardInterrupt()
             print('\n')
