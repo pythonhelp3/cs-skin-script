@@ -116,10 +116,10 @@ class Bot:
         # print("Press Ctrl-C to quit.") # to be used while the bot is running in the background
 
         try:
-            if(driver.current_url == 'https://skinport.com/market?sort=data&order=desc'):
+            if(self.driver.current_url == 'https://skinport.com/market?sort=data&order=desc'):
                 # scape the page for discounted elements
-                de = driver.find_elements(By.CSS_SELECTOR, ".GradientLabel.ItemPreview-discount span")
-                actions = ActionChains(driver)
+                de = self.driver.find_elements(By.CSS_SELECTOR, ".GradientLabel.ItemPreview-discount span")
+                actions = ActionChains(self.driver)
 
                 for discount_element in de:
                     discount_value = int (discount_element.text.strip("− %"))
@@ -156,32 +156,32 @@ class Bot:
                         break
 
                         # Wait for the cart element to have a value of 1
-            cart_count = WebDriverWait(driver, 10).until(
+            cart_count = WebDriverWait(self.driver, 10).until(
                 EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), "1"))
 
             # Find the first element and click it
-            cart_button = driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
-            actions = ActionChains(driver)
+            cart_button = self.driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
+            actions = ActionChains(self.driver)
             actions.move_to_element(cart_button).click().perform()
 
             # Wait for the second element to be clickable and click it
-            view_cart_button = WebDriverWait(driver, 10).until(
+            view_cart_button = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, ".SubmitButton.CartDropdown-checkout")))
             actions.move_to_element(view_cart_button).click().perform()
 
             # Wait for the checkboxes to appear and click them
-            check_box1 = WebDriverWait(driver, 10).until(
+            check_box1 = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='tradelock']")))
-            check_box2 = WebDriverWait(driver, 10).until(
+            check_box2 = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='cancellation']")))
 
             # Perform the checkbox clicking actions using action chains
-            actions = ActionChains(driver)
+            actions = ActionChains(self.driver)
             actions.move_to_element(check_box1).click().perform()
             actions.move_to_element(check_box2).click().perform()
 
             # Click the "Proceed to Checkout" button
-            proceed_to_checkout_button = WebDriverWait(driver, 10).until(
+            proceed_to_checkout_button = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
             proceed_to_checkout_button.click()
 
