@@ -6,3 +6,4 @@ from api import API
 # tool for calculating profit if the item is relisted on each item since items under $1000 have a sales fee of 12% and items over $1000 have a sales fee of 6%.
 
 # Link: https://docs.skinport.com
+
