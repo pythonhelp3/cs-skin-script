@@ -8,3 +8,5 @@ project.yuml
 
 api.txt
 config.py
+utils.py
+setup.py
