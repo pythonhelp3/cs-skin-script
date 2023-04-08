@@ -35,9 +35,6 @@ To be continued.
 - *Webdriver*
 - *Time*
 
-
-
-
 #### Todos:
 
 - Object Oriented Diagram Analysis
@@ -53,3 +50,25 @@ To be continued.
     - *Api*
     - *Client*
     - *BotContainer*
+
+
+
+#### *Getting Started*
+
+For this project, install the requirements by cloning the repositorym and installing the requirements.
+
+> ```pip install -r requirements```
+
+Once, the requirements have been installed, the bot should be able to run without doing anything more. 
+
+> ```python3 skinportassistbot.py```
+
+To use the API features, first find the API key, and API secret key from the SkinPort website under your account settings. 
+
+Create a ```config.py``` file. 
+
+Create two variables: ```clientId``` and ```clientSecret```. Both of these will hold the strings from the website. 
+
+Once these are been set, then you can run the API to test the features. 
+
+***Note***: The API features have yet to be created and can be modified if necessary!
