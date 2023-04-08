@@ -8,13 +8,17 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+from database import Database
+import os
 
-
-
+db = Database()
 
 # Find and select the "Add to cart" button after a qualifying item is found
 
 class Bot:
+
+    filtered_items = []
+
     def __init__(self, enable, run):
         if(enable == True):
             self.options = Options()
@@ -33,12 +37,71 @@ class Bot:
 
     def start(self):
         print("Starting Bot")
-        filtered_item = input("Please enter the items you wish to filter: ")
-        discount = input("Please enter the discount: ")
-        price = input("Please enter the price: ")
+        filtered_item = []  # input("Please enter the items you wish to filter: ")
+        discount = 27 # input("Please enter the discount: ")
+        price = 4 # input("Please enter the price: ")
         # cart_items = input()
 
         self.find_item(filtered_items = filtered_item, discount = discount, price = price, cart_items=1)
+        self.make_purchase()
+
+    def add_filter(self, item_list):
+        return self.filtered_items
+    # this helper function will drive the bot to make a purchase 
+    def make_purchase(self):
+        # # Wait for the cart element to have a value of :cart_items    
+        # cart_count = WebDriverWait(driver, 10).until(
+        #     EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), cart_items))
+
+        # # Find the first element and click it
+        # cart_button = driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
+        # actions = ActionChains(driver)
+        # actions.move_to_element(cart_button).click().perform()
+
+        # # Wait for the second element to be clickable and click it
+        # view_cart_button = WebDriverWait(driver, 10).until(
+        #     EC.element_to_be_clickable((By.CSS_SELECTOR, ".CartButton-viewCart")))
+        # actions.move_to_element(view_cart_button).click().perform()
+
+        # # Wait for the checkboxes to appear and click them
+        # check_box1 = WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='tradelock']")))
+        # check_box2 = WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='cancellation']"))) 
+
+        # # Perform the checkbox clicking actions using action chains
+        # actions = ActionChains(driver)
+        # actions.move_to_element(check_box1).click().perform()
+        # actions.move_to_element(check_box2).click().perform()
+
+        # # Click the "Proceed to Checkout" button
+        # proceed_to_checkout_button = WebDriverWait(driver, 10).until(
+        #     EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
+        # proceed_to_checkout_button.click()
+
+        # # Click the CSV element
+        # pyautogui.moveTo(1262, 348)
+        # time.sleep(1)
+        # pyautogui.click()
+        # time.sleep(0.5)
+        # pyautogui.typewrite('145')
+
+        # # Click the pay now button
+        # pyautogui.moveTo(1226, 419)
+        # time.sleep(0.1)
+        # pyautogui.click()
+
+        # # Update the cookies to store the state of the checkboxes
+        # tradelock_value = str(check_box1.is_selected()).lower()
+        # cancellation_value = str(check_box2.is_selected()).lower()
+
+        # # Write function that will tell me if there exist a database file
+        # if os.path.exists(os.getcwd() + "/database.db"):
+        #     print("file found")
+        # else:
+        #     print("file not found")
+
+        print("make_purchase function called")
 
 
     # this helper function will drive the bot to make selections based on prices, discounts, items allowed in cart, etc.
@@ -48,7 +111,7 @@ class Bot:
         print("Discount", discount)
         print("Price", price)
 
-        print("Press Ctrl-C to quit.")
+        # print("Press Ctrl-C to quit.") # to be used while the bot is running in the background
 
         try:
             if(driver.current_url == 'https://skinport.com/market?sort=data&order=desc'):
@@ -89,58 +152,16 @@ class Bot:
 
                         
 
-            # make_purchase()
-        except KeyboardInterrupt():
+            self.make_purchase()
+        except:
+            # KeyboardInterrupt()
             print('\n')
             pass
 
 
-    # this helper function will drive the bot to make a purchase   
-    def make_purchase(self, ):
-
-        # Wait for the cart element to have a value of :cart_items    
-        cart_count = WebDriverWait(driver, 10).until(
-            EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), cart_items))
-
-        # Find the first element and click it
-        cart_button = driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
-        actions = ActionChains(driver)
-        actions.move_to_element(cart_button).click().perform()
-
-        # Wait for the second element to be clickable and click it
-        view_cart_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".CartButton-viewCart")))
-        actions.move_to_element(view_cart_button).click().perform()
-
-        # Wait for the checkboxes to appear and click them
-        check_box1 = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='tradelock']")))
-        check_box2 = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='cancellation']"))) 
-
-        # Perform the checkbox clicking actions using action chains
-        actions = ActionChains(driver)
-        actions.move_to_element(check_box1).click().perform()
-        actions.move_to_element(check_box2).click().perform()
-
-        # Click the "Proceed to Checkout" button
-        proceed_to_checkout_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
-        proceed_to_checkout_button.click()
-
-        # Click the CSV element
-        pyautogui.moveTo(1262, 348)
-        time.sleep(1)
-        pyautogui.click()
-        time.sleep(0.5)
-        pyautogui.typewrite('145')
-
-        # Click the pay now button
-        pyautogui.moveTo(1226, 419)
-        time.sleep(0.1)
-        pyautogui.click()
-
-
+    
+        
+            
 
 
 

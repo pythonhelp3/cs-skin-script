@@ -30,7 +30,7 @@ while True:
         # get current url
         if driver.current_url == 'https://skinport.com/market?sort=date&order=desc':
 
-# Wait for the button to be clickable
+            # Wait for the button to be clickable
             button = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.CLASS_NAME, "LiveBtn"))
             )
@@ -38,7 +38,7 @@ while True:
             # Click the button only if the second element is not present
             if not driver.find_elements(By.CLASS_NAME, "LiveBtn--isActive"):
                 button.click()
-^ This code is used to click the live button when the page opens so new listings will appear, it wasn't in the original code I sent you. <-----Camden comment
+            # ^ This code is used to click the live button when the page opens so new listings will appear, it wasn't in the original code I sent you. <-----Camden comment
 
             # scrapes the page for the discounted elements 
             discount_elements = driver.find_elements(By.CSS_SELECTOR, ".GradientLabel.ItemPreview-discount span")
@@ -62,7 +62,7 @@ while True:
                         # Add a small delay to ensure the "Add to cart" button is displayed
                         time.sleep(0.05)
 
-                        ^ I changed the timing on this function because I found it doesn't need that much of a delay and can find the cart button very quickly <----- Camden comment
+                        # ^ I changed the timing on this function because I found it doesn't need that much of a delay and can find the cart button very quickly <----- Camden comment
                         
                         # Find and click the "Add to cart" button
                         add_to_cart_button = item_element.find_element(By.CSS_SELECTOR, ".ItemPreview-mainAction")
@@ -106,14 +106,15 @@ while True:
         time.sleep(0.5)
         pyautogui.typewrite('145')
 
-        ^ If there is a way to speed up this process I would like to know, typically the website just takes a second to load which is why I have the manual timings entered but if there is a way to immediately detect when the element is clickable, that would be ideal <----- Camden comment
+        # 
+        # ^ If there is a way to speed up this process I would like to know, typically the website just takes a second to load which is why I have the manual timings entered but if there is a way to immediately detect when the element is clickable, that would be ideal <----- Camden comment
         
         #Click the pay now button
         pyautogui.moveTo(1226, 419)
         time.sleep(0.1)
         pyautogui.click()
 
-        ^ Same with this process, it is manually timed and if there is a way to just detect the "pay now" button element and click it when it is available, that would work well <---- Camden comment
+        # ^ Same with this process, it is manually timed and if there is a way to just detect the "pay now" button element and click it when it is available, that would work well <---- Camden comment
         
         break
 
@@ -126,7 +127,7 @@ while True:
         print("Checkboxes clicked successfully!")
         break  # Stop looping after checkboxes are clicked
 
-        ^ This is used because when I left the checkout page and went back with a new item, it was not clicking the checkboxes anymore. This just checks if it has been checked or not <--- Camden comment
+        # ^ This is used because when I left the checkout page and went back with a new item, it was not clicking the checkboxes anymore. This just checks if it has been checked or not <--- Camden comment
 
     except:
         # If the checkboxes are not found on the page, refresh the page
@@ -134,7 +135,7 @@ while True:
         print("Checkboxes not found. Refreshing the page and retrying in 5 seconds...")
         time.sleep(1)
 
-        ^ I don't have this set up to refresh the page, it just waits for the user to go to the checkout screen to detect the checkboxes, can be modified as needed but if it works then that's fine <--- Camden comment
+        # ^ I don't have this set up to refresh the page, it just waits for the user to go to the checkout screen to detect the checkboxes, can be modified as needed but if it works then that's fine <--- Camden comment
 ```
 
 Second Function: (Provided by Camden)
