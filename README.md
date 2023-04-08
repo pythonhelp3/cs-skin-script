@@ -72,3 +72,5 @@ Create two variables: ```clientId``` and ```clientSecret```. Both of these will 
 Once these are been set, then you can run the API to test the features. 
 
 ***Note***: The API features have yet to be created and can be modified if necessary!
+
+Please ignore ```app.py```, and ```__init__.py``` !
