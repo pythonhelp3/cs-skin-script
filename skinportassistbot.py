@@ -22,13 +22,18 @@ class Bot:
     def __init__(self, enable, run):
         if(enable == True):
             self.options = Options()
+            # The profile directory user has to be the chrome profile you want to use, I used chrome profile named "Profile 1"
             self.options.add_argument('--profile-directory=user')
+            # This argument needs to be the path of your chrome profile minus the profile name, such as this C:\\Users\\USERNAME\\AppData\\Local\\Google\\Chrome\\User Data\\
             self.options.add_argument(r"--user-data-dir=app-data")
             self.driver = uc.Chrome(options=self.options)
+            
+# This part of the code is not opening the link in chrome even once chrome is open
 
             print("App-Data folder generated.")
 
             print("Opening Webpage")
+            
             
             if(run == True):
                 self.driver.get("https://skinport.com/market?sort=date&order=desc")
