@@ -38,7 +38,8 @@ class Bot:
     def start(self):
         print("Starting Bot")
         filtered_item = []  # input("Please enter the items you wish to filter: ")
-        discount = 27 # input("Please enter the discount: ")
+        discount = 27 # input("Please enter the discount: ") # (Camden comment) I'm not sure if this looks for the exact price and discount but if there is a way to set a range of discount (greater than or equal to 27)
+        # or for the price having it be greater than 4 but less than 10
         price = 4 # input("Please enter the price: ")
         # cart_items = input()
 
@@ -76,7 +77,8 @@ class Bot:
         # actions.move_to_element(check_box1).click().perform()
         # actions.move_to_element(check_box2).click().perform()
 
-        # # Click the "Proceed to Checkout" button
+        # The code is arriving at this point and then closing the chrome tab before making the purchase, saying in the terminal "make_purchase function called", may be a small issue
+        # Click the "Proceed to Checkout" button
         # proceed_to_checkout_button = WebDriverWait(driver, 10).until(
         #     EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
         # proceed_to_checkout_button.click()
