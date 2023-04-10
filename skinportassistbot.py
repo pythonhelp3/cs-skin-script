@@ -209,5 +209,6 @@ class Bot:
 
 # Testing Features
 
-bot = Bot(enable="True", run=False) # working
+bot = Bot(enable="True", run="False") # working 
+# (Camden comment) The false statement also needed to be in quotations for the bot to run, I will test the bot now and let you know about further errors
 bot.start()
