@@ -43,8 +43,8 @@ class Bot:
     def start(self):
         print("Starting Bot")
         filtered_item = []  # input("Please enter the items you wish to filter: ")
-        discount = 27 # input("Please enter the discount: ")
-        price = 4 # input("Please enter the price: ")
+        discount = input("Please enter the discount: ")
+        price = input("Please enter the price: ")
         # cart_items = input()
 
         self.find_item(filtered_items = filtered_item, discount = discount, price = price, cart_items=1)
@@ -99,8 +99,8 @@ class Bot:
         pyautogui.click()
 
         # Update the cookies to store the state of the checkboxes
-        tradelock_value = str(check_box1.is_selected()).lower()
-        cancellation_value = str(check_box2.is_selected()).lower()
+        # tradelock_value = str(check_box1.is_selected()).lower()
+        # cancellation_value = str(check_box2.is_selected()).lower()
 
         # # Write function that will tell me if there exist a database file
         # if os.path.exists(os.getcwd() + "/database.db"):

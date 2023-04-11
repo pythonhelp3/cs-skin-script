@@ -17,6 +17,13 @@ from config import clientId, clientSecret
 
 class Client:
 
+    # TODO: Add a config file to store the API keys
+    # Please add a open file to read the config file
+    #    and store the values in the variables in a config.txt file
+    #    create an if statement to check if the file exists
+    #    if it does not exist then create the file and ask for the API keys
+    #    if it does exist then read the file and store the values in the variables
+
     def __init__(self, url, api, api_secret):
         self.base_url = url
         self.clientId = api
@@ -32,10 +39,6 @@ class Client:
         pass
 
     
-
-
-
-
 # simple client call
 client = Client('https://api.skinport.com/', clientId, clientSecret)
 
