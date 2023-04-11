@@ -57,7 +57,7 @@ To be continued.
 
 For this project, install the requirements by cloning the repositorym and installing the requirements.
 
-> ```pip install -r requirements```
+> ```pip install -r requirements.txt```
 
 Once, the requirements have been installed, the bot should be able to run without doing anything more. 
 
