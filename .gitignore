@@ -1,14 +1,6 @@
 .vscode/
-
 __pycache__/
 
-Iteration_Two.md
-project.yuml
+Iteration_One.md
+db-database.db
 
-
-api.txt
-config.py
-utils.py
-setup.py
-app.py
-__init__.py
