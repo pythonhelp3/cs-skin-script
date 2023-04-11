@@ -28,8 +28,6 @@ class Bot:
             self.options.add_argument(r"--user-data-dir=app-data")
             self.driver = uc.Chrome(options=self.options)
             
-# This part of the code is not opening the link in chrome even once chrome is open
-
             print("App-Data folder generated.")
 
             print("Opening Webpage")
@@ -42,6 +40,8 @@ class Bot:
 
     def start(self):
         print("Starting Bot")
+        # It will refuse to even perform the checkout actions if discount and price are not entered. Once entered, it will perform the checkout functions but still falls short on getting past the checkboxes without shutting down
+        # I'm not sure how you got it to work but if you are available for a discord call to walk through the steps to get it to function let me know
         filtered_item = []  # input("Please enter the items you wish to filter: ")
         discount = input("Please enter the discount: ")
         price = input("Please enter the price: ")
