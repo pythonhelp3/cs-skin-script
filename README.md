@@ -65,12 +65,5 @@ Once, the requirements have been installed, the bot should be able to run withou
 
 To use the API features, first find the API key, and API secret key from the SkinPort website under your account settings. 
 
-Create a ```config.py``` file. 
 
-Create two variables: ```clientId``` and ```clientSecret```. Both of these will hold the strings from the website. 
 
-Once these are been set, then you can run the API to test the features. 
-
-***Note***: The API features have yet to be created and can be modified if necessary!
-
-Please ignore ```app.py```, and ```__init__.py``` !

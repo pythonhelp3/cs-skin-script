@@ -1,6 +1,6 @@
 import requests
 import base64
-from config import clientId, clientSecret
+from config import api_key_clientId, api_key_clientSecret
 
 
 
@@ -17,37 +17,34 @@ from config import clientId, clientSecret
 
 class Client:
 
-    # TODO: Add a config file to store the API keys
-    # Please add a open file to read the config file
-    #    and store the values in the variables in a config.txt file
-    #    create an if statement to check if the file exists
-    #    if it does not exist then create the file and ask for the API keys
-    #    if it does exist then read the file and store the values in the variables
-
-    def __init__(self, url, api, api_secret):
+    def __init__(self, url):
         self.base_url = url
-        self.clientId = api
-        self.clientSecret = api_secret
+        self.clientId = api_key_clientId
+        self.clientSecret = api_secret_clientSecret
 
     def auth(self):
-
         self.clientData = f"{self.clientId}:{self.clientSecret}"
         self.encodedData = str(base64.b64encode(self.clientData.encode("utf-8")), "utf-8")
         self.authorizationHeaderString = f"Basic {self.encodedData}"
     
-    def get_data(self):
-        pass
+    def get_item_orderbook(self, currency, tradable = 0, app_id = "730"):
+        r = requests.get("https://api.skinport.com/v1/items", params={
+            "app_id": app_id,
+            "currency": currency,
+            "tradable": 0
+        }).json()
+
+
+    # # Getters to add:
+    # def get_sales_history(self, name, currency, app_id = "730"):
+    #     pass
+    # def check_stock(self, name, currency):
+    #     pass
+    # def get_transactions(self, limit, order)
 
     
 # simple client call
-client = Client('https://api.skinport.com/', clientId, clientSecret)
+client = Client('https://api.skinport.com/', api_key_clientId, api_key_clientSecret)
+item_orders = client.get_item_orderbook("USD")
+print(item_orders)
 
-
-
-# test response from API
-r = requests.get('https://api.skinport.com/v1/items', params={
-    "app_id": 730,
-    "currency": "USD",
-    "tradable": 0}).json()
-
-print(r)
