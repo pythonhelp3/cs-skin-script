@@ -98,6 +98,8 @@ class Bot:
         time.sleep(0.1)
         pyautogui.click()
 
+        # Note: Note sure why this isnt working. Please leave me a run down of what might be wrong here?
+
         # Update the cookies to store the state of the checkboxes
         # tradelock_value = str(check_box1.is_selected()).lower()
         # cancellation_value = str(check_box2.is_selected()).lower()
