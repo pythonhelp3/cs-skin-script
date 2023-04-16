@@ -151,7 +151,10 @@ class Bot:
                             print(f"Added {item_name} to cart")
 
                         break
-
+# Adding something like this might help with the purchase function, I don't think this works but could be implemented 
+# Call the make_purchase method to make the purchase
+                        self.make_purchase()
+    
                         # Wait for the cart element to have a value of 1
             cart_count = WebDriverWait(self.driver, 10).until(
                 EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), "1"))
