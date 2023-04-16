@@ -17,7 +17,6 @@ db = Database()
 
 class Bot:
 
-    filtered_items = []
 
     def __init__(self, enable, run):
         if(enable == True):
@@ -34,7 +33,6 @@ class Bot:
 
             print("Opening Webpage")
             
-            
             if(run == True):
                 self.driver.get("https://skinport.com/market?sort=date&order=desc")
                 pass
@@ -50,9 +48,7 @@ class Bot:
         self.find_item(filtered_items = filtered_item, discount = discount, price = price, cart_items=1)
         self.make_purchase()
 
-    # Setter function for filtering for later
-    def add_filter(self, item_list):
-        return self.filtered_items.append(item_list)
+
     
     # this helper function will drive the bot to make a purchase 
     def make_purchase(self):
@@ -61,7 +57,7 @@ class Bot:
             EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), 1))
 
         # Find the first element and click it
-        cart_button = driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
+        cart_button = self.driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
         actions = ActionChains(self.driver)
         actions.move_to_element(cart_button).click().perform()
 
@@ -82,7 +78,7 @@ class Bot:
         actions.move_to_element(check_box2).click().perform()
 
         # Click the "Proceed to Checkout" button
-        proceed_to_checkout_button = WebDriverWait(driver, 10).until(
+        proceed_to_checkout_button = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
         proceed_to_checkout_button.click()
 
@@ -101,14 +97,9 @@ class Bot:
         # Note: Note sure why this isnt working. Please leave me a run down of what might be wrong here?
 
         # Update the cookies to store the state of the checkboxes
-        # tradelock_value = str(check_box1.is_selected()).lower()
-        # cancellation_value = str(check_box2.is_selected()).lower()
+        tradelock_value = str(check_box1.is_selected()).lower()
+        cancellation_value = str(check_box2.is_selected()).lower()
 
-        # # Write function that will tell me if there exist a database file
-        # if os.path.exists(os.getcwd() + "/database.db"):
-        #     print("file found")
-        # else:
-        #     print("file not found")
 
 
 
@@ -120,7 +111,6 @@ class Bot:
         print("Discount", discount)
         print("Price", price)
 
-        # print("Press Ctrl-C to quit.") # to be used while the bot is running in the background
 
         try:
             if(self.driver.current_url == 'https://skinport.com/market?sort=data&order=desc'):
@@ -217,5 +207,8 @@ class Bot:
 # Testing Features
 
 bot = Bot(enable=True, run=True) # working 
-# (Camden comment) The false statement also needed to be in quotations for the bot to run, I will test the bot now and let you know about further errors
 bot.start()
+
+
+
+    
