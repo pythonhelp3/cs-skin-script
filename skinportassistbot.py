@@ -1,5 +1,6 @@
 import undetected_chromedriver as uc
 import pyautogui
+# import pydirectinput
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
@@ -52,20 +53,20 @@ class Bot:
     
     # this helper function will drive the bot to make a purchase 
     def make_purchase(self):
-        # Wait for the cart element to have a value of :cart_items    
+        # Wait for the cart element to have a value of :cart_items 
+        # Adding str fixed the issue with getting chrome to stay open and loop the code   
         cart_count = WebDriverWait(self.driver, 10).until(
-            EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), 1))
+            EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".CartButton-count"), str(1)))
 
         # Find the first element and click it
         cart_button = self.driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
         actions = ActionChains(self.driver)
         actions.move_to_element(cart_button).click().perform()
-
-        # Wait for the second element to be clickable and click it
-        view_cart_button = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".CartButton-viewCart")))
-        actions.move_to_element(view_cart_button).click().perform()
-
+        
+        # This is quicker than using action chains
+        # Navigate to cart
+        self.driver.get("https://skinport.com/cart")
+        
         # Wait for the checkboxes to appear and click them
         check_box1 = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='tradelock']")))
@@ -81,7 +82,8 @@ class Bot:
         proceed_to_checkout_button = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
         proceed_to_checkout_button.click()
-
+        
+        # If there is a way to wait until the element is detected to click and typewrite, this would prevent error with loading times
         # Click the CSV element
         pyautogui.moveTo(1262, 348)
         time.sleep(1)
@@ -114,7 +116,7 @@ class Bot:
 
         try:
             if(self.driver.current_url == 'https://skinport.com/market?sort=data&order=desc'):
-                # scape the page for discounted elements
+                # scrapes the page for discounted elements
                 de = self.driver.find_elements(By.CSS_SELECTOR, ".GradientLabel.ItemPreview-discount span")
                 actions = ActionChains(self.driver)
 
@@ -130,7 +132,8 @@ class Bot:
                         price_value = float(price_element.text.strip("$"))
 
                         # Once item is found sort throught the filter list to identify whether or not the item
-                        #   added to the list (Not sure if this works lol)
+                        # is added to the list (Not sure if this works lol)
+                        # (Comment from pythonhelp3): This does not work and it does not add items to cart unless manually added
                         if 4 < price_value <= 10 and item_element not in filtered_items:
                             # Hover over the item to reveal the "Add to cart" button
                             actions.move_to_element(item_element).perform()
@@ -160,11 +163,10 @@ class Bot:
             cart_button = self.driver.find_element(By.CSS_SELECTOR, ".CartButton-button")
             actions = ActionChains(self.driver)
             actions.move_to_element(cart_button).click().perform()
-
-            # Wait for the second element to be clickable and click it
-            view_cart_button = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, ".SubmitButton.CartDropdown-checkout")))
-            actions.move_to_element(view_cart_button).click().perform()
+            
+            # This is quicker than using action chains
+            # Navigate to cart
+            self.driver.get("https://skinport.com/cart")
 
             # Wait for the checkboxes to appear and click them
             check_box1 = WebDriverWait(self.driver, 10).until(
@@ -182,6 +184,7 @@ class Bot:
                 EC.element_to_be_clickable((By.CSS_SELECTOR, "div.SubmitButton-title")))
             proceed_to_checkout_button.click()
 
+            # If there is a way to wait until the element is detected to click and typewrite, this would prevent error with loading times
             # Click the CVC element
             pyautogui.moveTo(1262, 348)
             time.sleep(1)
@@ -189,13 +192,13 @@ class Bot:
             time.sleep(0.5)
             pyautogui.typewrite('145')
 
-              #Click the pay now button
+              # Click the pay now button
             pyautogui.moveTo(1226, 419)
             time.sleep(0.1)
             pyautogui.click()
 
             # Soon to add a new database for simplifying trades, cancellations, etc.. May revert
-            #    to sessions cookies but will test running times very soon.
+            # to sessions cookies but will test running times very soon.
 
              
         except:
@@ -210,5 +213,5 @@ bot = Bot(enable=True, run=True) # working
 bot.start()
 
 
-
+# I have had issues with PyAutoGui and having been using PyDirectInput instead, it is not as quick when it comes to typing but it does everything else fine
     
